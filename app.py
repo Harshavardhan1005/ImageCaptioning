@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request
+from tensorflow.keras import Input
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.inception_v3 import preprocess_input,InceptionV3
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-from tensorflow.keras.models import load_model,Model
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import LSTM, Embedding, Dense, Dropout, add
 import numpy as np
 import cv2
 
@@ -10,7 +12,20 @@ app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 1
 
 max_length = 34
-model = load_model("image_captioning.h5")
+inputs1 = Input(shape=(2048,))
+fe1 = Dropout(0.5)(inputs1)
+fe2 = Dense(256, activation='relu')(fe1)
+inputs2 = Input(shape=(max_length,))
+
+se1 = Embedding(1652, 200, mask_zero=True)(inputs2)
+se2 = Dropout(0.5)(se1)
+se3 = LSTM(256)(se2)
+
+decoder1 = add([fe2, se3])
+decoder2 = Dense(256, activation='relu')(decoder1)
+outputs = Dense(1652, activation='softmax')(decoder2)
+
+model = Model(inputs=[inputs1, inputs2], outputs=outputs)
 model.load_weights("model_150.h5")
 
 model1 = InceptionV3(weights='imagenet')
