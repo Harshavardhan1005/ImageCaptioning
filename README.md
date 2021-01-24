@@ -6,4 +6,6 @@ used for generating captions.These are merged to get the context from the images
 4. It can be used to describe the videos(CCTV) in real time by raising an alarm as soon as possible if there is any malicious activity performed.
 
 
+## ---> Do check output.gif on how the model is predicting for a random test images.
+
 
