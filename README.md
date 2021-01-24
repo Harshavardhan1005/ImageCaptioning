@@ -4,8 +4,6 @@
 used for generating captions.These are merged to get the context from the images.
 3. Image Captioning can make Google Image Search as good as Google Search,in this case firts the image is converted into text and later search can be performmed based in the caption predicted. 
 4. It can be used to describe the videos(CCTV) in real time by raising an alarm as soon as possible if there is any malicious activity performed.
-
-
-## ---> Do check output.gif on how the model is predicting for a random test images.
+5. Check output.gif for some random test images.
 
 
